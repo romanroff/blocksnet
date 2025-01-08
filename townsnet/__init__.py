@@ -1,8 +1,6 @@
-"""
-Provision assessment for cities of an urban region
-"""
+import importlib
 
-__version__ = "0.0.1"
+__version__ = importlib.metadata.version("townsnet")
 __author__ = ""
 __email__ = ""
 __credits__ = []
