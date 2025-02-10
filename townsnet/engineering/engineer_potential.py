@@ -2,7 +2,14 @@ import geopandas as gpd
 from shapely.geometry import Point, LineString
 from shapely.geometry.base import BaseGeometry
 from typing import Dict, Any, Set, List
+from enum import Enum
 
+class EngineeringObject(Enum):
+    POWER_SUPPLY = 'Энергоснабжение'
+    HEAT_SUPPLY = 'Теплоснабжение'
+    GAS_SUPPLY = 'Газоснабжение'
+    WATER_SUPPLY = 'Водоснабжение'
+    WATER_DRAINAGE = 'Водоотведение'
 
 class InfrastructureAnalyzer:
     def __init__(self, infrastructure_gdf: gpd.GeoDataFrame, assessment_areas_gdf: gpd.GeoDataFrame) -> None:
@@ -30,6 +37,27 @@ class InfrastructureAnalyzer:
             return 10000.0   # 10 км
         else:
             return 1000.0    # 1 км
+        
+    @staticmethod
+    def _get_description(types_in_radius : list[str]):
+        all_types = {eng_obj.value for eng_obj in list(EngineeringObject)}
+        existing_types = set(types_in_radius)
+        non_existing_types = all_types - existing_types
+
+        existing_types_str = str.join(', ', [t.lower() for t in existing_types])
+        non_existing_types_str = str.join(', ', [t.lower() for t in non_existing_types])
+
+        description = ''
+        if len(existing_types) > 0 and len(non_existing_types) == 0:
+            types_str = str.join(', ', [existing_types_str, non_existing_types_str])
+            description = f'В радиусе доступности присутствуют все необходимые инженерные объекты: {types_str}.'
+        elif len(existing_types) == 0 and len(non_existing_types) > 0:
+            types_str = str.join(', ', [existing_types_str, non_existing_types_str])
+            description = f'В радиусе отсутствуют необходимые инженерные объекты: {types_str}.'
+        elif len(existing_types) > 0 and len(non_existing_types) > 0:
+            description = f'В радиусе доступности присутствуют необходимые инженерные объекты: {existing_types_str}. Однако, отсутствуют другие объекты инженерной инфраструктуры: {non_existing_types_str}.'
+        
+        return description
 
     def _analyze_infrastructure(self) -> None:
         """Анализирует инфраструктуру для каждой области оценки."""
@@ -62,8 +90,9 @@ class InfrastructureAnalyzer:
             # Сохраняем результаты
             self.assessment_areas_gdf.at[idx, 'score'] = len(unique_types_in_radius)
             self.assessment_areas_gdf.at[idx, 'types_in_radius'] = list(unique_types_in_radius)
+            self.assessment_areas_gdf.at[idx, 'description'] = self._get_description(unique_types_in_radius)
 
     def get_results(self) -> gpd.GeoDataFrame:
         """Возвращает результат в CRS 4326."""
-        return self.assessment_areas_gdf[['score', 'types_in_radius', 'geometry']].to_crs(epsg=4326)
+        return self.assessment_areas_gdf[['score', 'types_in_radius', 'description', 'geometry']].to_crs(epsg=4326)
 
