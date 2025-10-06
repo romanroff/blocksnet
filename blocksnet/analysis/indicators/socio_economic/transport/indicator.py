@@ -17,23 +17,25 @@ class TransportIndicator(IndicatorEnum):
     # fuel stations
     FUEL_STATIONS_COUNT = IndicatorMeta("fuel_stations_count")
     AVERAGE_FUEL_STATION_ACCESSIBILITY = IndicatorMeta(
-        "average_fuel_station_accessibility", aggregatable=False, unit="h"
+        "average_fuel_station_accessibility", aggregatable=False, unit="min"
     )
 
     # railway
     RAILWAY_STOPS_COUNT = IndicatorMeta("railway_stops_count")
     AVERAGE_RAILWAY_STOP_ACCESSIBILITY = IndicatorMeta(
-        "average_railway_stop_accessibility", aggregatable=False, unit="h"
+        "average_railway_stop_accessibility", aggregatable=False, unit="min"
     )
 
     # airports
     INTERNATIONAL_AIRPORTS_COUNT = IndicatorMeta("international_airports_count")
     AVERAGE_INTERNATIONAL_AIRPORT_ACCESSIBILITY = IndicatorMeta(
-        "average_international_airport_accessibility", aggregatable=False
+        "average_international_airport_accessibility", aggregatable=False, unit="min"
     )
 
     REGIONAL_AIRPORTS_COUNT = IndicatorMeta("regional_airports_count")
-    AVERAGE_REGIONAL_AIRPORT_ACCESSIBILITY = IndicatorMeta("average_regional_airport_accessibility", aggregatable=False)
+    AVERAGE_REGIONAL_AIRPORT_ACCESSIBILITY = IndicatorMeta(
+        "average_regional_airport_accessibility", aggregatable=False, unit="min"
+    )
 
     # ports
     PORTS_COUNT = IndicatorMeta("ports_count")

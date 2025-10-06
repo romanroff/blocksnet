@@ -24,7 +24,7 @@ class SocialCountIndicator(IndicatorEnum):
     # sports
     GYM = IndicatorMeta("gym")
     SWIMMING_POOL = IndicatorMeta("swimming_pool")
-    OUTDOOR_SPORTS = IndicatorMeta("outdoor_sports")
+    PITCH = IndicatorMeta("pitch")
     STADIUM = IndicatorMeta("stadium")
 
     # social
@@ -44,7 +44,6 @@ class SocialCountIndicator(IndicatorEnum):
     CULTURAL_CENTER = IndicatorMeta("cultural_center")
     CINEMA = IndicatorMeta("cinema")
     CONCERT_HALL = IndicatorMeta("concert_hall")
-    # STADIUM = 'stadium'
     ICE_ARENA = IndicatorMeta("ice_arena")
     MALL = IndicatorMeta("mall")
     PARK = IndicatorMeta("park")
@@ -59,4 +58,4 @@ class SocialCountIndicator(IndicatorEnum):
     HOTEL = IndicatorMeta("hotel")
     HOSTEL = IndicatorMeta("hostel")
     TOURIST_BASE = IndicatorMeta("tourist_base")
-    CATERING = IndicatorMeta("catering")
+    CATERING = IndicatorMeta("cafe")

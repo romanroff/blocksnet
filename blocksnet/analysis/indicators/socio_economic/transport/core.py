@@ -53,7 +53,7 @@ def _calculate_accessibility(counts_df: pd.DataFrame, accessibility_matrix: pd.D
     services_idx = counts_df[counts_df["count"] > 0].index
     acc_mx = accessibility_matrix.loc[residential_idx, services_idx]
     accs = acc_mx.min(axis=1)
-    return np.mean(accs.to_numpy()) / MIN_IN_H
+    return np.mean(accs.to_numpy())
 
 
 def calculate_transport_indicators(
@@ -74,18 +74,24 @@ def calculate_transport_indicators(
     }
 
     mapping = {
-        "fuel": (TransportIndicator.FUEL_STATIONS_COUNT, TransportIndicator.AVERAGE_FUEL_STATION_ACCESSIBILITY),
+        "fuel": ([TransportIndicator.FUEL_STATIONS_COUNT], [TransportIndicator.AVERAGE_FUEL_STATION_ACCESSIBILITY]),
         "train_station": (
-            TransportIndicator.RAILWAY_STOPS_COUNT,
-            TransportIndicator.AVERAGE_RAILWAY_STOP_ACCESSIBILITY,
+            [TransportIndicator.RAILWAY_STOPS_COUNT],
+            [TransportIndicator.AVERAGE_RAILWAY_STOP_ACCESSIBILITY],
         ),
+        # "aeroway_terminal": (
+        #     [TransportIndicator.INTERNATIONAL_AIRPORTS_COUNT, TransportIndicator.REGIONAL_AIRPORTS_COUNT],
+        #     [TransportIndicator.AVERAGE_INTERNATIONAL_AIRPORT_ACCESSIBILITY, TransportIndicator.AVERAGE_REGIONAL_AIRPORT_ACCESSIBILITY]
+        # )
     }
 
     for name, indicators in mapping.items():
-        count_indicator, accessibility_indicator = indicators
+        count_indicators, accessibility_indicators = indicators
         count, df = _calculate_count(blocks_df, name)
         accessibility = _calculate_accessibility(df, accessibility_matrix)
-        result[count_indicator] = int(count)
-        result[accessibility_indicator] = float(accessibility)
+        for count_indicator in count_indicators:
+            result[count_indicator] = int(count)
+        for accessibility_indicator in accessibility_indicators:
+            result[accessibility_indicator] = float(accessibility)
 
     return result

@@ -1,4 +1,3 @@
-from enum import Enum
 from functools import wraps
 from .indicator_enum import IndicatorEnum
 from .general import GeneralIndicator
@@ -10,7 +9,7 @@ PARENT_VALUE_BEFORE_COLUMN = "parent_value_before"
 PARENT_VALUE_AFTER_COLUMN = "parent_value_after"
 
 
-def _validate_indicator_type(indicator: Enum):
+def _validate_indicator_type(indicator: IndicatorEnum):
     if not isinstance(indicator, IndicatorEnum):
         expected_name = IndicatorEnum.__name__
         actual_name = type(indicator).__name__

@@ -31,7 +31,7 @@ def calculate_social_provision_indicators(
 
         population = df["population"].sum()
         capacity = df["capacity"].sum()
-        provision = (population * demand / 1000) / capacity
+        provision = capacity / (population / 1000 * demand)
 
         result[indicator] = min(1.0, float(provision))
 
