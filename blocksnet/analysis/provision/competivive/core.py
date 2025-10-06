@@ -149,11 +149,16 @@ def _distribute_demand(
 
 
 def provision_strong_total(blocks_df: pd.DataFrame):
-    return blocks_df[DEMAND_WITHIN_COLUMN].sum() / blocks_df.demand.sum()
+    demand_within = blocks_df[DEMAND_WITHIN_COLUMN].sum()
+    demand = blocks_df.demand.sum()
+    return float(demand_within / demand)
 
 
 def provision_weak_total(blocks_df: pd.DataFrame):
-    return (blocks_df[DEMAND_WITHIN_COLUMN].sum() + blocks_df[DEMAND_WITHOUT_COLUMN].sum()) / blocks_df.demand.sum()
+    demand_within = blocks_df[DEMAND_WITHIN_COLUMN].sum()
+    demand_without = blocks_df[DEMAND_WITHOUT_COLUMN].sum()
+    demand = blocks_df.demand.sum()
+    return float((demand_within + demand_without) / demand)
 
 
 def competitive_provision(
@@ -173,7 +178,7 @@ def competitive_provision(
 
     links = []
     logger.info("Setting and solving LP problems until max depth or break condition reached")
-    for depth in tqdm(range(1, max_depth + 1), disable=log_config.disable_tqdm):
+    for depth in range(1, max_depth + 1):
         blocks_df, depth_links = _distribute_demand(blocks_df, accessibility_matrix, accessibility, depth)
         links.extend(depth_links)
         break_condition = blocks_df[DEMAND_LEFT_COLUMN].sum() == 0 or blocks_df[CAPACITY_LEFT_COLUMN].sum() == 0
