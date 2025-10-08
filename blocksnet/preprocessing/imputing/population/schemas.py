@@ -5,4 +5,4 @@ from blocksnet.utils.validation import DfSchema
 
 class Schema(DfSchema):
     living_area: Series[float] = Field(ge=0)
-    population: Series[int] = Field(ge=0, nullable=True)
+    population: Series[float] = Field(ge=0, nullable=True)
