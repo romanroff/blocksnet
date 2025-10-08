@@ -53,6 +53,7 @@ ml = [
     "torch_geometric",
     'catboost',
     'xgboost',
+    'lightgbm'
 ]
 opt = ["optuna>=4.1.0,<5.0.0", "pymoo>=0.6.0,<1.0.0"]
 full = ["blocksnet[ml, opt]"]
@@ -62,6 +63,7 @@ ipynb = [
     "matplotlib-inline==0.1.6", #jupyter plots
     "folium==0.14.0",           #jupyter maps
     "matplotlib>=3.9.0,<4.0.0",
+    "ipywidgets"
 ]
 
 tests = ["pytest==7.4.3", "pytest-cov==4.1.0"]

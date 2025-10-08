@@ -50,5 +50,8 @@ estimators = [
     ("hgb", HistGradientBoostingClassifier(**MODEL_PARAMS["hgb"])),
 ]
 
-strategy = SKLearnVotingClassificationStrategy(estimators)
-strategy.load(ARTIFACTS_DIRECTORY)
+def get_default_strategy() -> SKLearnVotingClassificationStrategy:
+    strategy = SKLearnVotingClassificationStrategy(estimators)
+    strategy.load(ARTIFACTS_DIRECTORY)
+    print(ARTIFACTS_DIRECTORY)
+    return strategy

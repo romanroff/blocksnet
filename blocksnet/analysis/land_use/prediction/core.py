@@ -9,7 +9,7 @@ from shapely import Point, unary_union
 from blocksnet.enums import LandUseCategory, LandUse
 from blocksnet.machine_learning.context import BaseContext
 from blocksnet.machine_learning.strategy import BaseStrategy
-from ._strategy import strategy
+from ._strategy import get_default_strategy
 from .schemas import BlocksInputSchema
 from .preprocessing import DataProcessor
 
@@ -468,7 +468,7 @@ class SpatialClassifier(BaseContext):
         Returns:
             SpatialClassifier: Default classifier instance
         """
-        return cls(strategy)
+        return cls(get_default_strategy())
 
     def save_mistakes(self, test_gdf: gpd.GeoDataFrame, 
                       predictions: np.ndarray,
