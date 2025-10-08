@@ -31,5 +31,7 @@ class MulticlassClassifier(nn.Module):
         return self.head(x)
 
 
-strategy = TorchTensorMulticlassClassificationStrategy(model_cls=MulticlassClassifier)
-strategy.load(ARTIFACTS_DIRECTORY)
+def get_default_strategy() -> TorchTensorMulticlassClassificationStrategy:
+    strategy = TorchTensorMulticlassClassificationStrategy(model_cls=MulticlassClassifier)
+    strategy.load(ARTIFACTS_DIRECTORY)
+    return strategy

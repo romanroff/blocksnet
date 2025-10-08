@@ -6,7 +6,7 @@ from sklearn.metrics import accuracy_score
 from blocksnet.machine_learning import BaseContext
 from blocksnet.preprocessing.feature_engineering import generate_geometries_features
 from .schemas import BlockCategory, BlocksSchema, BlocksCategoriesSchema
-from ._strategy import strategy
+from ._strategy import get_default_strategy
 
 CATEGORIES_LIST = list(BlockCategory)
 
@@ -47,4 +47,4 @@ class BlocksClassifier(BaseContext):
 
     @classmethod
     def default(cls) -> "BlocksClassifier":
-        return cls(strategy)
+        return cls(get_default_strategy())
